@@ -1,5 +1,5 @@
 import {instance} from './instance'
-import {GetTasksResponse, ResponseType, TaskType, UpdateTaskModelType} from './types'
+import {GetTasksResponse, ResponseType, TaskType, UpdateTaskModelType} from '../utils/types'
 
 export const tasksApi = {
   getTasks(todoListId: string) {

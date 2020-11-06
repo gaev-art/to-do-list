@@ -1,5 +1,5 @@
 import {instance} from './instance'
-import {LoginParamsType, ResponseType} from './types'
+import {LoginParamsType, ResponseType} from '../utils/types'
 
 
 

@@ -1,5 +1,5 @@
 import {instance} from './instance'
-import {ResponseType, TodoListType} from './types'
+import {ResponseType, TodoListType} from '../utils/types'
 
 export const todoListsApi = {
   getTodoLists() {

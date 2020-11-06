@@ -1,6 +1,11 @@
 export type TasksStateType = { [key: string]: Array<TaskType> }
 export type FilterValuesType = 'all' | 'active' | 'completed'
 export type RequestStatusType = 'idle' | 'loading' | 'success' | 'failed'
+export type TodoListDomainType = TodoListType & {
+  filter: FilterValuesType
+  entityStatus: RequestStatusType
+}
+
 
 export type LoginParamsType = {
   email: string
