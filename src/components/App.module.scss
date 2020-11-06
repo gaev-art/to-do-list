@@ -1,0 +1,14 @@
+.itemForm {
+  flex-grow: 1;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+@media (max-width: 500px) {
+  .title {
+    display: none;
+
+  }
+}
