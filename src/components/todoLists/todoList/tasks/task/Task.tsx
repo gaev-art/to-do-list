@@ -5,15 +5,32 @@ import style from '../../../../App.module.scss'
 import {EditableSpan} from '../../../../common/EditableSpan'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import {Delete} from '@material-ui/icons'
+import {useDispatch} from 'react-redux'
+import {removeTaskTC, updateTaskTC} from '../../../../../redux/tasksReducer'
 
 type TaskProps = {
   task: TaskType
-};
-export const Task = (props: TaskProps) => {
+}
 
-  const onChangeHandler = useCallback(() => alert('cheeked'), [])
-  const onChangeTaskTitle = useCallback((title: string) => alert(title), [])
-  const removeTask = useCallback(() => alert('remove Task'), [])
+export const Task = (props: TaskProps) => {
+  const dispatch = useDispatch()
+
+  const onChangeHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => dispatch(updateTaskTC({
+    taskId: props.task.id,
+    model: {status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New},
+    todoListId: props.task.todoListId
+  })), [props.task])
+
+  const onChangeTaskTitle = useCallback((title: string) => dispatch(updateTaskTC({
+    taskId: props.task.id,
+    model: {title},
+    todoListId: props.task.todoListId
+  })), [props.task])
+
+  const removeTask = useCallback(() => dispatch(removeTaskTC({
+    todoListId: props.task.todoListId,
+    taskId: props.task.id
+  })), [props.task])
 
 
   return (

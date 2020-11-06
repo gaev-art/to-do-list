@@ -5,6 +5,7 @@ import {AddNewItemForm} from '../common/AddNewItemForm'
 import {useDispatch} from 'react-redux'
 import {logoutTC} from '../../redux/authReducer'
 import {useAppSelector} from '../../redux/store'
+import {addTodoListTC} from '../../redux/todoListsReducer'
 
 export const Header = () => {
 
@@ -13,7 +14,7 @@ export const Header = () => {
   const status = useAppSelector((state) => state.app.status)
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
 
-  const addTodoList = useCallback((title: string) => alert(title), [])
+  const addTodoList = useCallback((title: string) => dispatch(addTodoListTC(title)), [])
   const logout = useCallback(() => dispatch(logoutTC()), [])
 
   return (
@@ -27,7 +28,7 @@ export const Header = () => {
           />}
           {!isLoggedIn && <Typography variant="h4">To Do List!</Typography>}
         </div>
-        {isLoggedIn && <Button color="inherit" onClick={logout}>Logout</Button>}
+        {isLoggedIn && <Button color="inherit" onClick={logout}>Log out</Button>}
       </Toolbar>
       {status === 'loading' && <LinearProgress color="secondary"/>}
     </AppBar>

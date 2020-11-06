@@ -2,7 +2,6 @@ import {instance} from './instance'
 import {LoginParamsType, ResponseType} from '../utils/types'
 
 
-
 export const authApi = {
   me() {
     return instance.get<ResponseType<{ id: string, email: string, login: string }>>(`auth/me`)

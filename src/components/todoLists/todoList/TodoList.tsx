@@ -1,22 +1,42 @@
-import {FilterValuesType, TasksStateType, TodoListDomainType} from '../../../utils/types'
-import React, {useCallback} from 'react'
-import {Button, Grid, Paper} from '@material-ui/core'
+import {FilterValuesType, TodoListDomainType} from '../../../utils/types'
+import React, {useCallback, useEffect} from 'react'
+import {Button, Grid, Paper, PropTypes} from '@material-ui/core'
 import {EditableSpan} from '../../common/EditableSpan'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import {Delete} from '@material-ui/icons'
 import {AddNewItemForm} from '../../common/AddNewItemForm'
 import {Tasks} from './tasks/Tasks'
-import {PropTypes} from '@material-ui/core'
+import {useDispatch} from 'react-redux'
+import {changeTodoListFilterAC, changeTodoListTitleTC, removeTodoListTC} from '../../../redux/todoListsReducer'
+import {addTaskTC, fetchTasksTC} from '../../../redux/tasksReducer'
+import {useAppSelector} from '../../../redux/store'
 
 type TodoListProps = {
   todoList: TodoListDomainType
-  tasks: TasksStateType
-};
-export const TodoList = (props: TodoListProps) => {
-  const onChangeTodoListTitle = useCallback((title: string) => alert(title), [])
-  const addTask = useCallback((title: string) => alert(title), [])
-  const removeTodoList = useCallback(() => alert('remove TodoList'), [])
-  const onFilterButtonClickHandler = useCallback((buttonFilter) => alert(buttonFilter), [])
+  demo?: boolean
+}
+
+export const TodoList = ({demo = false, ...props}: TodoListProps) => {
+
+  const dispatch = useDispatch()
+
+
+  const onChangeTodoListTitle = useCallback((title: string) => dispatch(changeTodoListTitleTC({
+    todoListId: props.todoList.id,
+    title
+  })), [props.todoList.id])
+
+  const addTask = useCallback((title: string) => dispatch(addTaskTC({
+    todoListId: props.todoList.id,
+    title
+  })), [props.todoList.id])
+
+  const removeTodoList = useCallback(() => dispatch(removeTodoListTC(props.todoList.id)), [props.todoList.id])
+
+  const onFilterButtonClickHandler = useCallback((buttonFilter) => dispatch(changeTodoListFilterAC({
+    todoListId: props.todoList.id,
+    filter: buttonFilter
+  })), [props.todoList.id])
 
   const renderFilterButton = (buttonFilter: FilterValuesType, color: PropTypes.Color, text: string) => {
     return <Button variant={props.todoList.filter === buttonFilter ? 'outlined' : 'text'}
@@ -25,6 +45,16 @@ export const TodoList = (props: TodoListProps) => {
     </Button>
   }
 
+  useEffect(() => {
+    if (demo) {
+      return
+    }
+    dispatch(fetchTasksTC(props.todoList.id))
+  }, [props.todoList.id])
+
+  const tasks = useAppSelector((state) => state.tasks)
+
+  let allTodolistTasks = tasks[props.todoList.id]
 
   return (
     <Grid key={props.todoList.id} style={{width: '480px'}} item>
@@ -44,7 +74,7 @@ export const TodoList = (props: TodoListProps) => {
             </div>
             <div>
               <AddNewItemForm placeholder={'Enter task name '} addItem={addTask}/>
-              <Tasks tasks={props.tasks} todoListId={props.todoList.id}/>
+              <Tasks tasks={allTodolistTasks} todoListFilter={props.todoList.filter} todoListId={props.todoList.id}/>
               <div>
                 {renderFilterButton('active', 'primary', 'Active')}
                 {renderFilterButton('completed', 'secondary', 'Completed')}

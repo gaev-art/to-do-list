@@ -1,9 +1,9 @@
 .span {
-    width: 280px;
+  width: 280px;
 }
 
 @media (max-width: 466px) {
-    .span {
-        width: 135px;
-    }
+  .span {
+    width: 135px;
+  }
 }

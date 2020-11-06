@@ -30,7 +30,7 @@ test('correct status message should be set', () => {
 })
 test('correct isInitialized should be set', () => {
 
-  const endState = appReducer(startState, isInitializeAppTC.fulfilled(undefined,''))
+  const endState = appReducer(startState, isInitializeAppTC.fulfilled(undefined, ''))
 
   expect(endState.isInitialized).toBe(true)
 })

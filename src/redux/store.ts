@@ -4,12 +4,15 @@ import {configureStore} from '@reduxjs/toolkit'
 import {TypedUseSelectorHook, useSelector} from 'react-redux'
 import {authReducer} from './authReducer'
 import {appReducer} from './appReducer'
+import {todoListsReducer} from './todoListsReducer'
+import {tasksReducer} from './tasksReducer'
 
 
 const rootReducer = combineReducers({
   auth: authReducer,
   app: appReducer,
-
+  todoLists: todoListsReducer,
+  tasks: tasksReducer,
 })
 
 

@@ -1,17 +1,28 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Grid} from '@material-ui/core'
-import {TasksStateType, TodoListDomainType} from '../../utils/types'
 import {TodoList} from './todoList/TodoList'
 import {useAppSelector} from '../../redux/store'
-import { Redirect } from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {fetchTodoListsTC} from '../../redux/todoListsReducer'
 
-type TodoListsProps = {
-  todoLists: Array<TodoListDomainType>
-  tasks: TasksStateType
+type PropsType = {
+  demo?: boolean
 }
-export const TodoLists = (props: TodoListsProps) => {
 
+export const TodoLists = ({demo = false}: PropsType) => {
+  const dispatch = useDispatch()
+
+  const todoLists = useAppSelector((state) => state.todoLists)
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+
+  useEffect(() => {
+    if (demo || !isLoggedIn) {
+      return
+    }
+    dispatch(fetchTodoListsTC())
+  }, [dispatch])
+
 
   if (!isLoggedIn) {
     return <Redirect to={'/login'}/>
@@ -19,7 +30,7 @@ export const TodoLists = (props: TodoListsProps) => {
 
   return (
     <Grid container style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-      {props.todoLists.map((todo) => <TodoList tasks={props.tasks} key={todo.id} todoList={todo}/>)}
+      {todoLists.map((todo) => <TodoList key={todo.id} demo={demo} todoList={todo}/>)}
     </Grid>
   )
 }
