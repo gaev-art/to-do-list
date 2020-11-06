@@ -1,12 +1,24 @@
-import React from 'react'
-import {Container} from '@material-ui/core'
+import React, {useEffect} from 'react'
+import {CircularProgress, Container} from '@material-ui/core'
 import {v1} from 'uuid'
 import {TaskPriorities, TasksStateType, TaskStatuses, TodoListDomainType} from '../utils/types'
 import {Header} from './header/Header'
 import {TodoLists} from './todoLists/TodoLists'
+import {Login} from './login/Login'
+import {Switch, Route} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {useAppSelector} from '../redux/store'
+import {isInitializeAppTC} from '../redux/appReducer'
 
 
 export const App = () => {
+  const dispatch = useDispatch()
+
+  const isInitialized = useAppSelector((state) => state.app.isInitialized)
+
+  useEffect(() => {
+    dispatch(isInitializeAppTC())
+  }, [])
 
   const todolistId1 = v1()
   const todolistId2 = v1()
@@ -39,11 +51,22 @@ export const App = () => {
     ]
   }
 
+  if (!isInitialized) {
+    return <div
+      style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+      <CircularProgress/>
+    </div>
+  }
+
 
   return <div>
     <Header/>
     <Container fixed>
-      <TodoLists todoLists={todoLists} tasks={tasks}/>
+      <Switch>
+        <Route exact path={'/'} render={() => <TodoLists todoLists={todoLists} tasks={tasks}/>}/>
+        <Route path={'/login'} render={() => <Login/>}/>
+      </Switch>
+
     </Container>
   </div>
 }
