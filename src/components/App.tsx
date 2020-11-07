@@ -36,7 +36,7 @@ export const App = ({demo = false}: PropsType) => {
     <Container fixed>
       <ErrorSnackBar/>
       <Switch>
-        <Route exact path={'/'} render={() => <TodoLists demo={demo}/>}/>
+        <Route exact path={'/to-do-list'} render={() => <TodoLists demo={demo}/>}/>
         <Route path={'/login'} render={() => <Login/>}/>
       </Switch>
 

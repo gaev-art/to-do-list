@@ -9,6 +9,4 @@ export default {
   decorators: [ReduxStoreProviderDecorator, StoryRouter()]
 }
 
-export const AppBaseExample = () => {
-  return (<App demo={true}/>)
-}
+export const AppBaseExample = () => <App demo={true}/>

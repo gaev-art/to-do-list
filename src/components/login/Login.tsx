@@ -38,7 +38,7 @@ export const Login = () => {
   })
 
   if (isLoggedIn) {
-    return <Redirect to={'/'}/>
+    return <Redirect to={'/to-do-list'}/>
   }
 
   return <Grid container justify='center'>
