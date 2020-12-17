@@ -1,9 +1,16 @@
 .span {
-  width: 280px;
+    width: 280px;
+
+}
+
+.lineThrough {
+    width: 280px;
+    text-decoration: line-through;
+
 }
 
 @media (max-width: 466px) {
-  .span {
-    width: 135px;
-  }
+    .span {
+        width: 135px;
+    }
 }

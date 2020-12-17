@@ -32,9 +32,9 @@ export const Task = (props: TaskProps) => {
     taskId: props.task.id
   })), [props.task])
 
-
   return (
-    <Paper key={props.task.id} style={{margin: '6px', padding: '3px'}}>
+    <Paper draggable={true}
+           key={props.task.id} style={{margin: '6px', padding: '3px'}}>
       <div className={props.task.status === TaskStatuses.Completed ? style.isDone : ''}
            style={{
              padding: '5px',
@@ -48,7 +48,7 @@ export const Task = (props: TaskProps) => {
                   onChange={onChangeHandler}
                   color="primary"
         />
-        <EditableSpan value={props.task.title} onChange={onChangeTaskTitle}/>
+        <EditableSpan value={props.task.title} checked={props.task.status} onChange={onChangeTaskTitle}/>
         <IconButton style={{position: 'absolute', right: '2px'}}
                     color="secondary"
                     onClick={removeTask}

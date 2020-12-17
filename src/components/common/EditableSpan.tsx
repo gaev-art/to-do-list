@@ -1,15 +1,16 @@
 import React, {useCallback, useState} from 'react'
 import {TextField} from '@material-ui/core'
 import style from './EditableSpan.module.css'
+import {TaskStatuses} from '../../utils/types'
 
 type PropsType = {
   value: string
   onChange: (title: string) => void
+  checked?: TaskStatuses
 }
 
 
 export const EditableSpan = React.memo((props: PropsType) => {
-
   const [isEditMode, setIsEditMode] = useState(false)
   const [title, setTitle] = useState('')
 
@@ -35,6 +36,8 @@ export const EditableSpan = React.memo((props: PropsType) => {
     setTitle(event.currentTarget.value)
   }, [])
 
+  const styles = !props.checked ? `${style.span}` : `${style.lineThrough}`
+
   return (
     <>
       {isEditMode
@@ -45,7 +48,7 @@ export const EditableSpan = React.memo((props: PropsType) => {
           autoFocus
           onBlur={deActiveEditMode}
         />
-        : <span className={style.span} onDoubleClick={activeEditMode}>{props.value}</span>}
+        : <span className={styles} onDoubleClick={activeEditMode}>{props.value}</span>}
     </>
   )
 })

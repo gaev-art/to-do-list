@@ -57,7 +57,7 @@ export const TodoList = ({demo = false, ...props}: TodoListProps) => {
   let allTodolistTasks = tasks[props.todoList.id]
 
   return (
-    <Grid key={props.todoList.id} style={{width: '480px'}} item>
+    <Grid style={{width: '480px'}} item>
       <Paper elevation={3} style={{margin: '30px', padding: '10px'}}>
         <div style={{textAlign: 'center'}}>
           <div>
@@ -74,7 +74,10 @@ export const TodoList = ({demo = false, ...props}: TodoListProps) => {
             </div>
             <div>
               <AddNewItemForm placeholder={'Enter task name '} addItem={addTask}/>
-              <Tasks tasks={allTodolistTasks} todoListFilter={props.todoList.filter} todoListId={props.todoList.id}/>
+              <Tasks
+                tasks={allTodolistTasks}
+                todoListFilter={props.todoList.filter}
+                todoListId={props.todoList.id}/>
               <div>
                 {renderFilterButton('active', 'primary', 'Active')}
                 {renderFilterButton('completed', 'secondary', 'Completed')}
