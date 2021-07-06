@@ -14,6 +14,7 @@ type PropsType = {
 }
 
 export const App = ({demo = false}: PropsType) => {
+
   const dispatch = useDispatch()
 
   const isInitialized = useAppSelector((state) => state.app.isInitialized)
